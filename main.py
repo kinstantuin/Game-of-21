@@ -15,10 +15,16 @@ cards = [
     'A', 'A', 'A', 'A',
 ]
 
+
 # Класс игрока 
 class Player: 
     cards = []
+    
     score = 0
+
+    # функция вывода счета игрока
+    def print_score(self):
+        print(self.score)
 
     # фукнция взятия карты у крупье. После выполнения фукнции, карта добавится в список 
     # карт игрока, после чего уже может подсчитываться количество очков игрока
@@ -28,7 +34,15 @@ class Player:
     # фукнция подсчета количества очков у игрока 
     def count_score(self):
         for i in self.cards: 
-            print(i)
+            try: 
+                self.score += int(i)
+                # print(1 + 2)
+            except:
+                print("не число")
+                
+
+
+
 
     # функия показа карт игрока 
     def print_cards(self):
@@ -68,4 +82,9 @@ class Game:
 a = Croupier()
 a.give_card()
 a.print_cards()
+
 a.player1.print_cards()
+a.player1.count_score()
+
+# n = '2'
+# print(int(n) + 2)
