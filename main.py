@@ -15,17 +15,28 @@ cards = [
     'A', 'A', 'A', 'A',
 ]
 
-class Croupier: 
+class Croupier:
+    # копия исходной колоды карт именно для крупье (заряженная в ларьке) 
     cards = cards
 
 
     def print_cards(self):
         print(self.cards)
 
+    # фукнция выдачи карт
     def give_card(self): 
         rand_index = randint(0, len(cards) - 1)
         print(self.cards[rand_index])
         self.cards.pop(rand_index)  
+
+
+class Player: 
+    cards = []
+    score = 0
+
+
+class Game: 
+    
 
 
 a = Croupier()
