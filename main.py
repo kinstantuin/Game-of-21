@@ -34,14 +34,22 @@ class Player:
     # фукнция подсчета количества очков у игрока 
     def count_score(self):
         for i in self.cards: 
+            # если выпало число, только в виде символа, перевести его в число и сложить 
+            # с остальным количеством очков 
             try: 
                 self.score += int(i)
                 # print(1 + 2)
+            # если выпало не число, перевести его в числовое значение 
+            # и сложить с остальным количеством очков
             except:
-                print("не число")
-                
-
-
+                if i == 'J': 
+                    self.score += 8
+                elif i == 'Q': 
+                    self.score += 9
+                elif i == 'K': 
+                    self.score += 10
+                elif i == 'A': 
+                    self.score += 11
 
 
     # функия показа карт игрока 
@@ -66,6 +74,7 @@ class Croupier:
     # фукнция выдачи карт
     def give_card(self): 
         rand_index = randint(0, len(cards) - 1) 
+        print("Выдана карта:", self.cards[rand_index])
         self.player1.take_card(self.cards.pop(rand_index))
         
 
@@ -81,10 +90,13 @@ class Game:
 
 a = Croupier()
 a.give_card()
+a.give_card()
+a.give_card()
 a.print_cards()
 
 a.player1.print_cards()
 a.player1.count_score()
+a.player1.print_score()
 
 # n = '2'
 # print(int(n) + 2)
