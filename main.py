@@ -15,29 +15,57 @@ cards = [
     'A', 'A', 'A', 'A',
 ]
 
+# Класс игрока 
+class Player: 
+    cards = []
+    score = 0
+
+    # фукнция взятия карты у крупье. После выполнения фукнции, карта добавится в список 
+    # карт игрока, после чего уже может подсчитываться количество очков игрока
+    def take_card(self, card): 
+        self.cards.append(card)
+
+    # фукнция подсчета количества очков у игрока 
+    def count_score(self):
+        for i in self.cards: 
+            print(i)
+
+    # функия показа карт игрока 
+    def print_cards(self):
+        print("player cards:", self.cards)
+
+
+
+
 class Croupier:
     # копия исходной колоды карт именно для крупье (заряженная в ларьке) 
     cards = cards
 
-
+    # список игроков, закрепленных за одним крупье
+    player1 = Player()
+    player2 = Player()
+    
+    # функция показа карт крупье
     def print_cards(self):
         print(self.cards)
 
     # фукнция выдачи карт
     def give_card(self): 
-        rand_index = randint(0, len(cards) - 1)
-        print(self.cards[rand_index])
-        self.cards.pop(rand_index)  
+        rand_index = randint(0, len(cards) - 1) 
+        self.player1.take_card(self.cards.pop(rand_index))
+        
 
 
-class Player: 
-    cards = []
-    score = 0
-
-
+# Класс игры. Является основным классом.
 class Game: 
+    croupier = Croupier()
+    player1 = Player()
+    player2 = Player()
+
     
 
 
 a = Croupier()
 a.give_card()
+a.print_cards()
+a.player1.print_cards()
