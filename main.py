@@ -144,9 +144,13 @@ class Game:
             print("Player 1 is Winner!")
             self.is_game = False
 
+
+    # основная функция, которая реализует остальные функции и классы
     def play(self):
+        # флаг для определения перебора больше положенного количества очков у игрока
         flag_check_loose = False
 
+        # первоначальная раздача карт первому игроку и последующий вывод карт с набранными очками
         print("Player1: ")
         self.croupier.give_card(self.player1)
         self.player1.print_cards()
@@ -154,25 +158,37 @@ class Game:
         self.player1.print_score()
 
 
+        # отделение вывода первого игрока от второго новыми строками
+        print()
+        print()
 
-        print()
-        print()
-        
+        # первоначальная раздача карт второму игроку и последующий вывод карт с набранными очками
         print("Player2: ")
         self.croupier.give_card(self.player2)
         self.player2.print_cards()
         print("Score: ", end="")
         self.player2.print_score()
 
+        # основной цикл игры. Будет продолжаться до того момента, как двое из игроков откажутся брать карты 
+        # или один (или оба) из игроков не наберет количество очков сверх нормы (> 21)
         while self.is_game == True: 
+            # "Флаг" для обозначения продолжения игры первым игроком
             continue_game1 = input("Player1: Do you want to take another card? (y/n): ")
+            # если игрок согласился взять карту - выдается карта
             if continue_game1 == "y": 
                 self.croupier.give_card(self.player1)
+
+            # "Флаг" для обозначения продолжения игры вторым игроком
             continue_game2 = input("Player2: Do you want to take another card? (y/n): ")
+            # если игрок согласился взять карту - выдается карта
             if continue_game2 == "y": 
                 self.croupier.give_card(self.player2)
+            # если оба игрока ответили отрицательно на вопрос взять еще карты 
+            # основной цикл игры заканчивается
             elif continue_game1 == "n" and continue_game2 == "n": 
                 self.is_game = False
+
+            # каждую итерацию цикла выводятся карты и счет первого игрока 
             print("Player1: ")
             self.player1.print_cards()
             print("Score: ", end="")
@@ -180,9 +196,10 @@ class Game:
             
             
 
-
+            # отделение вывода игроков пустыми строчками
             print()
             print()
+            # каждую итерацию цикла выводятся карты и счет второго игрока 
             print("Player2: ")
             self.player2.print_cards()
             print("Score: ", end="")
