@@ -34,6 +34,7 @@ class Player:
     def print_score(self):
         print(self.score)
 
+    # функия получения счета 
     def get_score(self):
         return self.score
 
@@ -102,22 +103,50 @@ class Game:
     # список игроков
     player1 = Player()
     player2 = Player()
-    
-    def determine_winner(self):
+
+    # функия для проверки счета игроков на перебор очков. Вызывается каждую итерацию после того 
+    # как игрок возьмет карты. Если хоть у одного игрока количество очков больше 21, игра заканчивается и определяется победитель
+    def check_loose(self): 
+        # создаются переменные для хранения очков игрока
         player1_score = self.player1.get_score() # 10
         player2_score = self.player2.get_score() # 15
-        if player1_score > 21 or player2_score > 21: 
-            print(min(player1_score, player2_score))
+
+        # если у двух игроков сразу больше максимального количества очков, они оба проигрывают
+        # возвращается значение -1 для того, чтобы знать, вызывать фукнию determine_winner или нет
+        if player1_score > 21 and player2_score > 21: 
+            print("Both loose!")
             self.is_game = False
-        else: 
-            if player1_score - player2_score < 0: 
-                print("Player 2 is Winner!")
-                self.is_game = False
-            else:
-                print("Player 1 is Winner!")
-                self.is_game = False
+            return -1
+        # если у первого игрока колиество очков больше максимального, он проигрывает 
+        elif player1_score > 21: 
+            print("Player 2 is Winner!")
+            self.is_game = False
+            return -1
+        # если у второго игрока количество очков больше максимального, он проигрывает
+        elif player2_score > 21:
+            print("Player 1 is Winner!")
+            self.is_game = False
+            return -1
+
+        
+    # Определяется победитель. Функция вызывается в том случае, если оба игрока отказались брать карты
+    def determine_winner(self):
+        # создаю переменные с очками каждого из игроков 
+        player1_score = self.player1.get_score() # 10
+        player2_score = self.player2.get_score() # 15
+        
+        # если разность очков второго игрока от первого будет меньше нуля, значит выиграл второй игрок 
+        if player1_score - player2_score < 0: 
+            print("Player 2 is Winner!")
+            self.is_game = False
+        # в обратном случае выигрывает первый игрок
+        else:
+            print("Player 1 is Winner!")
+            self.is_game = False
 
     def play(self):
+        flag_check_loose = False
+
         print("Player1: ")
         self.croupier.give_card(self.player1)
         self.player1.print_cards()
@@ -148,7 +177,8 @@ class Game:
             self.player1.print_cards()
             print("Score: ", end="")
             self.player1.print_score()
-
+            
+            
 
 
             print()
@@ -158,33 +188,18 @@ class Game:
             print("Score: ", end="")
             self.player2.print_score()
 
-        self.determine_winner()
-        # print("Player1: ", end="")
-        # self.croupier.give_card(self.player1)
-        # print("Score: ", end = "")
-        # self.croupier.player1.print_score()
+            # вызывается функция для слежения за превышением максимально допустимого количества очков
+            # если кто-то из игроков набрал больше положенного - функция возвращает значение -1, исходя из которого
+            # я ставлю флагу flag_check_loose значение True, чтобы в дальнейшем не вызывать функцию determine_winner
+            # после всего этого цикл сразу завершается
+            if self.check_loose() == -1: 
+                flag_check_loose = True
+                break 
 
-
-        # self.croupier.give_card("Player2: ", self.player2)
-        # print("Player2: score: ", end = "")
-        # self.croupier.player2.print_score()
-        # while self.is_game:
-            
-        #     continue_game1 = input("Player1: Do you want to take another card? (y/n): ")
-        #     continue_game2 = input("Player2: Do you want to take another card? (y/n): ")
-        #     if continue_game1 == "y": 
-        #         self.croupier.give_card("Player1: ", self.player1)
-        #     if continue_game2 == "y": 
-        #         self.croupier.give_card("Player2: ", self.player2)
-        #     elif continue_game1 == "n" and continue_game2 == "n": 
-        #         self.is_game = False
-        #     print("Player1: score: ", end = "")
-        #     self.croupier.player1.print_score()
-
-        #     print("Player2: score: ", end = "")
-        #     self.croupier.player2.print_score()
-        # self.determine_winner()
-        
+        # если флаг False (функция проверки превышения максимального количества очков у игрока check_false не определила
+        # то, что у какого-то из игроков количество очков больше максимального) - вызывается фукнция определения победителя
+        if flag_check_loose == False:
+            self.determine_winner()        
     
 
 # основной цикл игры состоит из раздачи карты игроку, уточнение продолжения игры и 
