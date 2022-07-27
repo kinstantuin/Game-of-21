@@ -61,6 +61,8 @@ class Game:
         # первоначальная раздача карт первому игроку и последующий вывод карт с набранными очками
         print("Player1: ")
         self.croupier.give_card(self.player1)
+        print("Money: ", end="")
+        self.player1.print_money()
         self.player1.print_cards()
         print("Score: ", end="")
         self.player1.print_score()
@@ -73,6 +75,8 @@ class Game:
         # первоначальная раздача карт второму игроку и последующий вывод карт с набранными очками
         print("Player2: ")
         self.croupier.give_card(self.player2)
+        print("Money: ", end="")
+        self.player2.print_money()
         self.player2.print_cards()
         print("Score: ", end="")
         self.player2.print_score()
@@ -96,8 +100,10 @@ class Game:
             elif continue_game1 == "n" and continue_game2 == "n": 
                 self.is_game = False
 
-            # каждую итерацию цикла выводятся карты и счет первого игрока 
+            # каждую итерацию цикла выводятся деньги, карты и счет первого игрока 
             print("Player1: ")
+            print("Money: ", end="")
+            self.player1.print_money()
             self.player1.print_cards()
             print("Score: ", end="")
             self.player1.print_score()
@@ -107,8 +113,10 @@ class Game:
             # отделение вывода игроков пустыми строчками
             print()
             print()
-            # каждую итерацию цикла выводятся карты и счет второго игрока 
+            # каждую итерацию цикла выводятся деньги, карты и счет второго игрока 
             print("Player2: ")
+            print("Money: ", end="")
+            self.player2.print_money()
             self.player2.print_cards()
             print("Score: ", end="")
             self.player2.print_score()

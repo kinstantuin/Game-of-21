@@ -1,11 +1,16 @@
 # Класс игрока 
+from re import M
+
+
 class Player: 
     cards = None    
     score = None
+    money = None
 
     def __init__(self):
        self.cards = []
        self.score = 0 
+       self.money = 1000
 
 
     # функция вывода счета игрока
@@ -15,6 +20,19 @@ class Player:
     # функия получения счета 
     def get_score(self):
         return self.score
+
+    # фунукия вывода валюты игрока 
+    def print_money(self):
+        print(self.money)
+
+    # функция получения валюты игрока
+    def get_money(self):
+        return self.money
+
+    # функция выставления нужного уровня денег. Вызывается в классе крупье.
+    def set_money(self, money):
+        self.money = money
+
 
     # фукнция взятия карты у крупье. После выполнения фукнции, карта добавится в список 
     # карт игрока, после чего уже может подсчитываться количество очков игрока

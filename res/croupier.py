@@ -18,7 +18,7 @@ class Croupier:
     # копия исходной колоды карт именно для крупье (заряженная в ларьке) 
     cards = cards
 
-    
+    bet = None
     
     # функция показа карт крупье
     def print_cards(self):
@@ -30,4 +30,20 @@ class Croupier:
         # print("Выдана карта:", self.cards[rand_index])
         player.take_card(self.cards.pop(rand_index))
         return
-        
+    
+
+    # функция для того, чтобы добавить валюту опредлеенному игроку 
+    def give_money(self, player, money): 
+        player.get_money(money)
+
+    # функция для вывода ставки на текущий раунд 
+    def print_bet(self):
+        print(self.bet)
+
+    # геттер для ставки крупье
+    def get_bet(self):
+        return self.bet
+
+    # сеттер для ставки крупье (будет использоваться как изменение ставки игроком)
+    def set_bet(self, bet):
+        self.bet = bet
