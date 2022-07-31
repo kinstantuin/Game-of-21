@@ -34,7 +34,10 @@ class Croupier:
 
     # функция для того, чтобы добавить валюту опредлеенному игроку 
     def give_money(self, player, money): 
-        player.get_money(money)
+        player.set_money(player.money + money)
+
+    def take_money(self, player, money): 
+        player.set_money(player.money - money)
 
     # функция для вывода ставки на текущий раунд 
     def print_bet(self):
