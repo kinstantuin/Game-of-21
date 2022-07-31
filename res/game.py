@@ -23,16 +23,22 @@ class Game:
         # возвращается значение -1 для того, чтобы знать, вызывать фукнию determine_winner или нет
         if player1_score > 21 and player2_score > 21: 
             print("Both loose!")
+            self.croupier.take_money(self.player2, self.croupier.get_bet())
+            self.croupier.take_money(self.player1, self.croupier.get_bet())
             self.is_game = False
             return -1
         # если у первого игрока колиество очков больше максимального, он проигрывает 
         elif player1_score > 21: 
             print("Player 2 is Winner!")
+            self.croupier.give_money(self.player2, self.croupier.get_bet())
+            self.croupier.take_money(self.player1, self.croupier.get_bet())
             self.is_game = False
             return -1
         # если у второго игрока количество очков больше максимального, он проигрывает
         elif player2_score > 21:
             print("Player 1 is Winner!")
+            self.croupier.give_money(self.player1, self.croupier.get_bet())
+            self.croupier.take_money(self.player2, self.croupier.get_bet())
             self.is_game = False
             return -1
 
@@ -46,15 +52,23 @@ class Game:
         # если разность очков второго игрока от первого будет меньше нуля, значит выиграл второй игрок 
         if player1_score - player2_score < 0: 
             print("Player 2 is Winner!")
+            self.croupier.give_money(self.player2, self.croupier.get_bet())
+            self.croupier.take_money(self.player1, self.croupier.get_bet())
             self.is_game = False
         # в обратном случае выигрывает первый игрок
         else:
             print("Player 1 is Winner!")
+            self.croupier.give_money(self.player1, self.croupier.get_bet())
+            self.croupier.take_money(self.player2, self.croupier.get_bet())
             self.is_game = False
 
 
     # основная функция, которая реализует остальные функции и классы
     def play(self):
+        # выставление ставки на текущий раунд
+        bet_on_round = input("Введите ставку на раунд: ")
+        self.croupier.set_bet(int(bet_on_round))
+
         # флаг для определения перебора больше положенного количества очков у игрока
         flag_check_loose = False
 
@@ -132,5 +146,13 @@ class Game:
         # если флаг False (функция проверки превышения максимального количества очков у игрока check_false не определила
         # то, что у какого-то из игроков количество очков больше максимального) - вызывается фукнция определения победителя
         if flag_check_loose == False:
-            self.determine_winner()        
+            self.determine_winner()  
+
+        if input("Продолжить игру? (y/n): ") == "y": 
+            self.is_game = True
+            # очистка карт игроков в случае, если начнется новая игра
+            self.player1.clear_cards()
+            self.player2.clear_cards()
+            print("\n\n\n")
+            self.play()
     
