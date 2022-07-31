@@ -1,7 +1,4 @@
 # Класс игрока 
-from re import M
-
-
 class Player: 
     cards = None    
     score = None
@@ -12,6 +9,8 @@ class Player:
        self.score = 0 
        self.money = 1000
 
+    def clear_cards(self): 
+        self.cards = []
 
     # функция вывода счета игрока
     def print_score(self):
