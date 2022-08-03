@@ -41,25 +41,37 @@ class Player:
         # непосредственно после каждого получения карт игроком
         self.count_score()
 
+    # функция парсинга значения карты. Необходима для корректного вычисления счета игрока
+    def parse_card(self, card): 
+        result_string = ""
+        i = 0
+        while card[i] != "_": 
+            result_string = result_string + card[i] 
+            i = i + 1
+        return result_string
+
+
     # фукнция подсчета количества очков у игрока 
     def count_score(self):
         self.score = 0
         for i in self.cards: 
+            card = self.parse_card(i)
+            print(card)
             # если выпало число, только в виде символа, перевести его в число и сложить 
             # с остальным количеством очков 
             try: 
-                self.score += int(i)
+                self.score += int(card)
                 # print(1 + 2)
             # если выпало не число, перевести его в числовое значение 
             # и сложить с остальным количеством очков
             except:
-                if i == 'J': 
+                if card == "J": 
                     self.score += 8
-                elif i == 'Q': 
+                elif card == "Q": 
                     self.score += 9
-                elif i == 'K': 
+                elif card == "K": 
                     self.score += 10
-                elif i == 'A': 
+                elif card == "A": 
                     self.score += 11
 
 
